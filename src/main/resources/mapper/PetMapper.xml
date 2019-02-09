@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.minprogram.dataInterface.mapper.PetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.petadoption.minprogram.dataInterface.entity.Pet">
+        <id column="pet_id" property="petId"/>
+        <result column="pet_type" property="petType"/>
+        <result column="pet_general" property="petGeneral"/>
+        <result column="pet_describe" property="petDescribe"/>
+        <result column="pet_variety" property="petVariety"/>
+        <result column="pet_birth" property="petBirth"/>
+        <result column="pet_release_time" property="petReleaseTime"/>
+        <result column="pet_user" property="petUser"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        pet_id, pet_type, pet_general, pet_describe, pet_variety, pet_birth, pet_release_time, pet_user
+    </sql>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.minprogram.dataInterface.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.petadoption.minprogram.dataInterface.entity.Comment">
+        <id column="comm_id" property="commId"/>
+        <result column="comm_content" property="commContent"/>
+        <result column="comm_time" property="commTime"/>
+        <result column="comm_user" property="commUser"/>
+        <result column="comm_pet" property="commPet"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        comm_id, comm_content, comm_time, comm_user, comm_pet
+    </sql>
+
+</mapper>

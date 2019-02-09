@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petadoption.minprogram.dataInterface.mapper.UsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.petadoption.minprogram.dataInterface.entity.Users">
+        <id column="uuid" property="uuid" />
+        <result column="user_wx_open_id" property="userWxOpenId" />
+        <result column="user_session_key" property="userSessionKey" />
+        <result column="user_name" property="userName" />
+        <result column="user_general" property="userGeneral" />
+        <result column="user_city" property="userCity" />
+        <result column="user_income" property="userIncome" />
+        <result column="user_phone" property="userPhone" />
+        <result column="user_create_time" property="userCreateTime" />
+        <result column="user_avator" property="userAvator" />
+        <result column="user_birthday" property="userBirthday" />
+        <result column="user_last_login" property="userLastLogin" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uuid, user_wx_open_id, user_session_key, user_name, user_general, user_city, user_income, user_phone,
+        user_create_time, user_avator, user_birthday, user_last_login
+    </sql>
+
+    <select id="findByUUID" resultType="com.petadoption.minprogram.dataInterface.entity.Users">
+        select * from users where uuid = #{uuid}
+    </select>
+
+</mapper>
