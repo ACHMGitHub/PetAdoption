@@ -19,7 +19,7 @@ public class JWTConfig {
     /**
      * JWT 自定义密钥 我这里写死的
      */
-    private static final String SECRET_KEY = "2c7e20f4ecb34f3395350b0e95ddbd0c";
+//    private static final String SECRET_KEY = "2c7e20f4ecb34f3395350b0e95ddbd0c";
 
     /**
      * JWT 过期时间值 这里写死为和小程序时间一致 7200 秒，也就是两个小时
@@ -37,9 +37,10 @@ public class JWTConfig {
      * @return 返回 jwt token
      */
     public String createTokenByWxAccount(Users users) {
-        String jwtId = UUID.randomUUID().toString();                 //JWT 随机ID,做为验证的key
+        //用户uuid作为key值，防止重复
+        String jwtId = users.getUuid();
         //加密算法进行签名得到token
-        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+        Algorithm algorithm = Algorithm.HMAC256(users.getUserSalt());
         String token = JWT.create()
                 .withClaim("wxOpenId", users.getUserWxOpenId())
                 .withClaim("sessionKey", users.getUserSessionKey())
@@ -59,14 +60,14 @@ public class JWTConfig {
      * @param token 密钥
      * @return 返回是否校验通过
      */
-    public boolean verifyToken(String token) {
+    public boolean verifyToken(String token, String secretKey) {
         try {
             //根据token解密，解密出jwt-id , 先从redis中查找出redisToken，匹配是否相同
             String redisToken = redisTemplate.opsForValue().get("JWT-SESSION-" + getJwtIdByToken(token));
             if (!redisToken.equals(token)) return false;
 
             //得到算法相同的JWTVerifier
-            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+            Algorithm algorithm = Algorithm.HMAC256(secretKey);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withClaim("wxOpenId", getWxOpenIdByToken(redisToken))
                     .withClaim("sessionKey", getSessionKeyByToken(redisToken))

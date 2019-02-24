@@ -29,6 +29,8 @@ public class Users implements Serializable {
 
     private String userWxOpenId;
 
+    private String userSalt;
+
     private String userSessionKey;
 
     private String userName;

@@ -1,5 +1,7 @@
 package com.petadoption.minprogram.shiro;
 
+import com.petadoption.minprogram.dataInterface.entity.Users;
+import com.petadoption.minprogram.dataInterface.service.IUsersService;
 import com.petadoption.minprogram.jwt.JWTConfig;
 import com.petadoption.minprogram.wxInterface.vo.JWTToken;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,6 +13,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,6 +23,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Resource
     private JWTConfig jwtConfig;
+    @Autowired
+    private IUsersService usersService;
 
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
@@ -45,11 +50,12 @@ public class ShiroRealm extends AuthorizingRealm {
         String jwtToken = (String) token.getCredentials();
         String wxOpenId = jwtConfig.getWxOpenIdByToken(jwtToken);
         String sessionKey = jwtConfig.getSessionKeyByToken(jwtToken);
-        if (wxOpenId == null || wxOpenId.equals(""))
+        Users user = usersService.getUserByWxOpenId(wxOpenId);
+        if (wxOpenId == null || wxOpenId.equals("") || user == null)
             throw new AuthenticationException("user account not exits , please check your token");
         if (sessionKey == null || sessionKey.equals(""))
             throw new AuthenticationException("sessionKey is invalid , please check your token");
-        if (!jwtConfig.verifyToken(jwtToken))
+        if (!jwtConfig.verifyToken(jwtToken, user.getUserSalt()))
             throw new AuthenticationException("token is invalid , please check your token");
         return new SimpleAuthenticationInfo(token, token, getName());
     }

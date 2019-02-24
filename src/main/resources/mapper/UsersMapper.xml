@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.petadoption.minprogram.dataInterface.entity.Users">
         <id column="uuid" property="uuid" />
         <result column="user_wx_open_id" property="userWxOpenId" />
+        <result column="user_salt" property="userSalt" />
         <result column="user_session_key" property="userSessionKey" />
         <result column="user_name" property="userName" />
         <result column="user_general" property="userGeneral" />

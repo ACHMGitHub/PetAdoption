@@ -8,6 +8,7 @@ import com.petadoption.minprogram.dataInterface.service.IUsersService;
 import com.petadoption.minprogram.wxInterface.service.IWxAppletService;
 import com.petadoption.minprogram.wxInterface.vo.Code2SessionResponse;
 import com.petadoption.minprogram.wxInterface.entity.Token;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,11 +81,13 @@ public class WxAccountServiceImpl implements IWxAppletService {
         else {
             //先从本地数据库中查找用户是否存在
             Users wxAccount = usersService.getUserByWxOpenId(response.getOpenid());
+
             //不存在就新建用户
             if (wxAccount == null) {
                 wxAccount = new Users();
                 wxAccount.setUserWxOpenId(response.getOpenid());
                 wxAccount.setUserCreateTime(LocalDateTime.now());
+                wxAccount.setUserSalt(RandomStringUtils.randomAlphanumeric(20));
             }
 
             //更新sessionKey和 登陆时间
