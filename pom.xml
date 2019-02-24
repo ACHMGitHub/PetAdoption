@@ -12,7 +12,7 @@
     <artifactId>minprogram</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>minprogram</name>
-    <description></description>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
