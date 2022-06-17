@@ -38,7 +38,7 @@
         <jwt.version>0.7.0</jwt.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <joda.time.version>2.9.9</joda.time.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <hutool.version>4.1.12</hutool.version>
         <guava.version>19.0</guava.version>
         <pagehelper.version>4.1.6</pagehelper.version>
